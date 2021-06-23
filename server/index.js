@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import userRoutes from './routes/users.js';
+import postRoutes from './routes/post.js';
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ mongoose.connect(
 	{
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
+		useFindAndModify: true,
 	},
 	() => {
 		console.log('Connected to MONGO');
@@ -24,6 +26,7 @@ mongoose.connect(
 );
 
 app.use('/user', userRoutes);
+app.use('/post', postRoutes);
 
 app.get('/user', (req, res) => res.send('Welcome to User page'));
 
