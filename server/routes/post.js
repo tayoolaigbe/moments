@@ -12,11 +12,11 @@ import {
 const router = express.Router();
 
 router.get('/', getPosts);
-router.get('/timeline', timeline);
 router.get('/:id', getPost);
 router.post('/', createPost);
 router.patch('/:id', updatePost);
 router.delete('/:id', deletePost);
 router.patch('/:id/like', likePost);
+router.get('/timeline/all', timeline);
 
 export default router;

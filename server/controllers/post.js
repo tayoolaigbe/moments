@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 import Post from '../models/post.js';
+import User from '../models/user.js';
 
 export const getPosts = async (req, res) => {
 	try {
@@ -101,11 +102,13 @@ export const timeline = async (req, res) => {
 	try {
 		const currentUser = await User.findById(req.body.userId);
 		const userPosts = await Post.find({ userId: currentUser._id });
+
 		const friendPosts = await Promise.all(
-			currentUser.followings.map(friendId => {
+			currentUser.following.map(friendId => {
 				return Post.find({ userId: friendId });
 			})
 		);
+
 		res.json(userPosts.concat(...friendPosts));
 	} catch (err) {
 		res.status(500).json(err);
