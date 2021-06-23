@@ -1,8 +1,8 @@
 export const Users = [
 	{
 		id: 1,
-		profilePicture: 'assets/person/1.jpeg',
-		username: 'Safak Kocaoglu',
+		profilePicture: 'assets/person/7.jpeg',
+		username: 'Eyitayo Olaigbe',
 	},
 	{
 		id: 2,
@@ -31,7 +31,7 @@ export const Users = [
 	},
 	{
 		id: 7,
-		profilePicture: 'assets/person/7.jpeg',
+		profilePicture: 'assets/person/1.jpeg',
 		username: 'Travis Bennett',
 	},
 	{
