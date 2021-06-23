@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import mongoose from 'mongoose';
 
 import User from '../models/user.js';
 
@@ -59,5 +60,57 @@ export const signin = async (req, res) => {
 		res.status(200).json({ result: existingUser, token });
 	} catch (error) {
 		return res.status(500).json({ message: 'Something went wrong!' });
+	}
+};
+
+export const updateUser = async (req, res) => {
+	const { id } = req.params;
+
+	if (!mongoose.Types.ObjectId.isValid(id))
+		return res.status(404).send(`No User with that Id`);
+
+	try {
+		const updatedUser = await User.findByIdAndUpdate(
+			id,
+			{ $set: req.body },
+			{ new: true }
+		);
+
+		const { password, ...others } = updatedUser._doc;
+
+		res.status(200).json(others);
+	} catch (error) {
+		res.status(500).json(error);
+	}
+};
+
+export const deleteUser = async (req, res) => {
+	const { id } = req.params;
+
+	if (!mongoose.Types.ObjectId.isValid(id))
+		return res.status(404).send(`No User with that Id`);
+
+	try {
+		await User.findByIdAndRemove(id);
+
+		res.status(200).json('Account deleted Successfully');
+	} catch (error) {
+		res.status(500).json(error);
+	}
+};
+
+export const getUser = async (req, res) => {
+	const { id } = req.params;
+
+	if (!mongoose.Types.ObjectId.isValid(id))
+		return res.status(404).send(`No User with that Id`);
+
+	try {
+		const user = await User.findById(id);
+
+		const { password, ...others } = user._doc;
+		res.status(200).json(others);
+	} catch (error) {
+		res.status(500).json(error);
 	}
 };
